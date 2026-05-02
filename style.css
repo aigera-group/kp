@@ -1041,12 +1041,13 @@ footer{
   margin-top:48px}
 .portfolio-slider {
   display: flex;
+  flex-wrap: nowrap; /* ← БЕЗ ЭТОГО карточки переносятся вниз */
   gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   padding-bottom: 16px;
-  padding-right: 48px; /* чтобы последняя карточка не обрезалась */
+  padding-right: 48px;
   -webkit-overflow-scrolling: touch;
 }
 .portfolio-slider::-webkit-scrollbar{
@@ -1072,7 +1073,7 @@ footer{
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 48px;
-  overflow: hidden; /* обрезает выход за рамки */
+  overflow: hidden;
 }
 .portfolio-card:hover{
   border-color:rgba(0,229,160,0.3);
@@ -1094,8 +1095,13 @@ footer{
   transform:scale(1.04)}
 .portfolio-overlay{
   position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,0.5) 100%);opacity:0;transition:opacity 0.3s}
-.portfolio-card:hover .portfolio-overlay{
-  opacity:1}
+.portfolio-card {
+  flex: 0 0 calc(33.333% - 14px); /* ← flex-shrink: 0 важен */
+  min-width: 280px;
+  scroll-snap-align: start;
+  /* остальные стили... */
+}
+
 .portfolio-info{
   padding:20px 22px 22px}
 .portfolio-name{
